@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Invitación de San Valentín</title>
 
-  <!-- Fuentes -->
+  <!-- Fuentes románticas -->
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -23,7 +23,7 @@
     }
 
     .invitation {
-      background-color: rgba(255, 255, 255, 0.82);
+      background-color: rgba(255, 255, 255, 0.85);
       padding: 30px;
       border-radius: 25px;
       width: 60%;
@@ -66,14 +66,6 @@
       cursor: default;
     }
 
-    .mute-btn {
-      margin-top: 15px;
-      background: transparent;
-      border: none;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
     .hearts {
       position: absolute;
       top: 10px;
@@ -97,6 +89,17 @@
       animation: fadeIn 1.2s ease-in-out;
     }
 
+    /* Controles de audio */
+    #audioControls {
+      display: none;
+      margin-top: 20px;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 10px;
+    }
+
     @media (max-width: 768px) {
       .invitation { width: 90%; }
       h1 { font-size: 34px; }
@@ -117,11 +120,6 @@
 </head>
 <body>
 
-  <!-- 🎵 Música local -->
-  <audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
-
   <div class="invitation">
     <div class="hearts">
       <img src="https://letstalk.howest.be/wp-content/uploads/2020/02/giphy-27.gif">
@@ -140,53 +138,42 @@
       ¿Me harías el honor de aceptarme como tu San Valentín?
     </p>
 
-    <button class="button" id="acceptButton">¡Sí, claro! 🎶</button>
+    <button class="button" id="acceptButton">¡Sí, claro! 💛</button>
 
     <div class="thank-you" id="thankYouMessage">
       ✨ Gracias por decir que sí mi cielo ✨<br>
       Eres mi vida 💖
     </div>
 
-    <button class="mute-btn" id="muteBtn" style="display:none;">🔇</button>
+    <!-- 🎵 CONTROLES DE AUDIO (compatibles con iOS) -->
+    <div id="audioControls">
+      <p style="margin-bottom:8px;">🎶 Nuestra canción</p>
+      <audio id="music" controls loop playsinline>
+        <source src="bella.mp3" type="audio/mpeg">
+        Tu navegador no soporta audio.
+      </audio>
+    </div>
   </div>
 
   <script>
     const acceptButton = document.getElementById('acceptButton');
     const thankYouMessage = document.getElementById('thankYouMessage');
+    const audioControls = document.getElementById('audioControls');
     const music = document.getElementById('music');
-    const muteBtn = document.getElementById('muteBtn');
-
-    let fadeInterval;
-    let muted = false;
-
-    function fadeInMusic() {
-      music.volume = 0;
-      music.play();
-      fadeInterval = setInterval(() => {
-        if (music.volume < 0.6) {
-          music.volume += 0.02;
-        } else {
-          clearInterval(fadeInterval);
-        }
-      }, 200);
-    }
 
     acceptButton.addEventListener('click', () => {
-      fadeInMusic();
-
       acceptButton.classList.add('accepted');
       acceptButton.textContent = 'Aceptado 💛';
       thankYouMessage.style.display = 'block';
-      muteBtn.style.display = 'inline';
-    });
+      audioControls.style.display = 'block';
 
-    muteBtn.addEventListener('click', () => {
-      muted = !muted;
-      music.muted = muted;
-      muteBtn.textContent = muted ? '🔊' : '🔇';
+      // Intento de reproducción (en algunos navegadores sonará directo)
+      music.volume = 0.6;
+      music.play().catch(() => {
+        // En iOS el usuario toca ▶️ manualmente
+      });
     });
   </script>
 
 </body>
 </html>
-
