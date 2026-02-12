@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invitación de San Valentín</title>
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Playfair Display', serif;
+      background-image: url(https://wallpapers-clan.com/wp-content/uploads/2025/01/beauty-and-the-beast-dancing-scene-wallpaper-preview.jpg);
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .invitation {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 30px;
+      border-radius: 25px;
+      width: 60%;
+      max-width: 620px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 44px;
+      margin-bottom: 18px;
+      color: #000;
+    }
+
+    p {
+      font-size: 20px;
+      margin-bottom: 22px;
+      color: #000;
+    }
+
+    .button {
+      background-color: #c0392b;
+      color: white;
+      padding: 16px 36px;
+      font-size: 19px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      text-transform: uppercase;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    }
+
+    .button.accepted {
+      background-color: #d4af37;
+      color: #000;
+      cursor: default;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .hearts img {
+      width: 32px;
+      animation: floatHearts 4s ease-in-out infinite;
+    }
+
+    .thank-you {
+      display: none;
+      background-color: rgba(212, 175, 55, 0.95);
+      padding: 18px;
+      border-radius: 15px;
+      font-size: 24px;
+      color: #000;
+      font-family: 'Dancing Script', cursive;
+      margin-top: 20px;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      .invitation { width: 90%; }
+      h1 { font-size: 34px; }
+      p { font-size: 17px; }
+    }
+
+    @keyframes floatHearts {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-30px); opacity: 0.6; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🎵 Música MP3 desde Google Drive -->
+  <audio id="music" preload="auto" loop>
+    <source src="https://drive.google.com/uc?export=download&id=1BLcTE8mT4A5amkElm0Zd2c1spmUnRBTt" type="audio/mpeg">
+  </audio>
+
+  <div class="invitation">
+    <div class="hearts">
+      <img src="https://letstalk.howest.be/wp-content/uploads/2020/02/giphy-27.gif">
+      <img src="https://letstalk.howest.be/wp-content/uploads/2020/02/giphy-27.gif">
+      <img src="https://letstalk.howest.be/wp-content/uploads/2020/02/giphy-27.gif">
+    </div>
+
+    <h1>
+      ¿Quieres ser mi San Valentín<br>
+      Yasna Millaleo?
+    </h1>
+
+    <p>
+      Esta fecha llena de amor sincero e incondicional,<br>
+      quiero compartir un momento mágico contigo.<br>
+      ¿Me harías el honor de aceptarme como tu San Valentín?
+    </p>
+
+    <button class="button" id="acceptButton">¡Sí, claro!</button>
+
+    <div class="thank-you" id="thankYouMessage">
+      ✨ Gracias por decir que sí mi cielo ✨<br>
+      Eres mi vida 💖
+    </div>
+  </div>
+
+  <script>
+    const acceptButton = document.getElementById('acceptButton');
+    const thankYouMessage = document.getElementById('thankYouMessage');
+    const music = document.getElementById('music');
+
+    acceptButton.addEventListener('click', () => {
+      acceptButton.classList.add('accepted');
+      acceptButton.textContent = 'Aceptado 💛';
+      thankYouMessage.style.display = 'block';
+
+      music.volume = 0.6;
+      music.play().catch(() => {
+        alert("Toca nuevamente la pantalla para activar la música 🎵");
+      });
+    });
+  </script>
+
+</body>
+</html>
+
