@@ -23,7 +23,7 @@
     }
 
     .invitation {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.82);
       padding: 30px;
       border-radius: 25px;
       width: 60%;
@@ -64,6 +64,14 @@
       background-color: #d4af37;
       color: #000;
       cursor: default;
+    }
+
+    .mute-btn {
+      margin-top: 15px;
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
     }
 
     .hearts {
@@ -109,9 +117,9 @@
 </head>
 <body>
 
-  <!-- 🎵 Música MP3 desde Google Drive -->
+  <!-- 🎵 Música local -->
   <audio id="music" preload="auto" loop>
-    <source src="https://drive.google.com/uc?export=download&id=1BLcTE8mT4A5amkElm0Zd2c1spmUnRBTt" type="audio/mpeg">
+    <source src="bella.mp3" type="audio/mpeg">
   </audio>
 
   <div class="invitation">
@@ -132,31 +140,52 @@
       ¿Me harías el honor de aceptarme como tu San Valentín?
     </p>
 
-    <button class="button" id="acceptButton">¡Sí, claro!</button>
+    <button class="button" id="acceptButton">¡Sí, claro! 🎶</button>
 
     <div class="thank-you" id="thankYouMessage">
       ✨ Gracias por decir que sí mi cielo ✨<br>
       Eres mi vida 💖
     </div>
+
+    <button class="mute-btn" id="muteBtn" style="display:none;">🔇</button>
   </div>
 
   <script>
     const acceptButton = document.getElementById('acceptButton');
     const thankYouMessage = document.getElementById('thankYouMessage');
     const music = document.getElementById('music');
+    const muteBtn = document.getElementById('muteBtn');
+
+    let fadeInterval;
+    let muted = false;
+
+    function fadeInMusic() {
+      music.volume = 0;
+      music.play();
+      fadeInterval = setInterval(() => {
+        if (music.volume < 0.6) {
+          music.volume += 0.02;
+        } else {
+          clearInterval(fadeInterval);
+        }
+      }, 200);
+    }
 
     acceptButton.addEventListener('click', () => {
+      fadeInMusic();
+
       acceptButton.classList.add('accepted');
       acceptButton.textContent = 'Aceptado 💛';
       thankYouMessage.style.display = 'block';
+      muteBtn.style.display = 'inline';
+    });
 
-      music.volume = 0.6;
-      music.play().catch(() => {
-        alert("Toca nuevamente la pantalla para activar la música 🎵");
-      });
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      music.muted = muted;
+      muteBtn.textContent = muted ? '🔊' : '🔇';
     });
   </script>
 
 </body>
 </html>
-
